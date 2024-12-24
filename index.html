@@ -1,0 +1,47 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    <h1>Home</h1>
+    <div id="product-container"></div>
+    <script type="module">
+        import { renderNavbar } from './navbar.js';
+        import { displayProducts } from './displayProducts.js';
+        
+        renderNavbar("#navbar");
+
+        const products = [
+            { id: 1, name: "Product 1", category: "Category A", price: "$10", rating: "4.5" },
+            { id: 2, name: "Product 2", category: "Category B", price: "$20", rating: "4.0" },
+            { id: 3, name: "Product 3", category: "Category A", price: "$15", rating: "4.8" }
+        ];
+
+        const handleAddToCart = (product) => {
+            if (confirm("Are you sure you want to add this item to the cart?")) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert("Product added to cart");
+            }
+        };
+
+        const handleAddToWishlist = (product) => {
+            if (confirm("Are you sure you want to add this item to the wishlist?")) {
+                let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+                wishlist.push(product);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                alert("Product added to wishlist");
+            }
+        };
+
+        displayProducts(products, "#product-container", handleAddToCart, handleAddToWishlist);
+    </script>
+</body>
+</html>
